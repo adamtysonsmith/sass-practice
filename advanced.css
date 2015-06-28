@@ -1,0 +1,80 @@
+a:hover {
+  color: red; }
+
+p.message-error {
+  color: red; }
+
+article {
+  color: black; }
+
+.icon-save {
+  background-image: url("/images/save.png"); }
+
+.icon-cancel {
+  background-image: url("/images/cancel.png"); }
+
+.icon-help {
+  background-image: url("/images/help.png"); }
+
+.button-save {
+  width: 50px; }
+
+.button-cancel {
+  width: 50px; }
+
+.button-help {
+  width: 100px; }
+
+p {
+  background: #80b280; }
+
+p {
+  padding: 20px; }
+
+p.important {
+  padding: 50px; }
+
+.icon-save {
+  color: green; }
+
+.icon-cancel {
+  color: gray; }
+
+.icon-delete {
+  color: red; }
+
+@media (max-width: 768px) {
+  p {
+    font-size: 150%; } }
+/* @content ends */
+body article p {
+  font-size: 100%;
+  color: black;
+  padding: 10px; }
+  @media (max-width: 768px) {
+    body article p {
+      font-size: 150%; } }
+
+@media (max-width: 768px) {
+  p {
+    font-size: 150%; } }
+  @media (max-width: 768px) and (orientation: landscape) {
+    p {
+      line-height: 75%; } }
+
+.animal, .cat {
+  background: gray; }
+
+.cat {
+  color: white; }
+
+.cat, .dog {
+  background: gray; }
+
+.cat {
+  color: white; }
+
+.dog {
+  color: black; }
+
+/*# sourceMappingURL=advanced.css.map */

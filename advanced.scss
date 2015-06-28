@@ -1,0 +1,199 @@
+// Prefixing Parent Selectors
+a {
+    &:hover {
+        color: red;
+    }
+}
+
+
+// Variable Expansion in Selectors
+$alertClass: "error";
+
+p.message-#{$alertClass} {
+    color: red;
+}
+
+
+// Control Flow Directives
+// @if, @for, @while, @each
+$debug: false; // TODO: move to _settings.scss
+
+article {
+    color: black;
+    
+    // IF Statement
+    @if ($debug) { // visualizing layout internals
+        border: 1px dotted red;
+    }
+}
+
+// Each statement
+@each $name in 'save' 'cancel' 'help' {
+    .icon-#{$name} {
+        background-image: url('/images/#{$name}.png');
+    }
+}
+
+
+// List Data Type
+$buttonConfig: 'save' 50px, 'cancel' 50px, 'help' 100px;
+// TODO: move to _settings.scss
+
+@each $tuple in $buttonConfig {
+    .button-#{nth($tuple, 1)} {
+        width: nth($tuple, 2);
+    }
+}
+
+
+// Defining Custom Functions
+@function make-greener($value) {
+    @return $value + rgb(0,50,0); // arithmetic with colors is totally fine, btw
+}
+p {
+    background: make-greener(gray);
+}
+
+
+// Argument Defaults
+@mixin foobar($a, $b, $padding: 20px) {
+    padding: $padding;
+    // ...and something with $a and $b
+}
+
+p {
+    @include foobar(123, "abc"); // the default padding's fine
+}
+
+p.important {
+    @include foobar(123, "abc", 50px); // override the default
+}
+
+
+// Keyword Arguments
+@mixin foobar($topPadding: 10px, $rightPadding: 20px,
+    $bottomPadding: 10px, $leftPadding: 20px, $evenMorePadding: 10px) {
+    // do something with all these arguments...
+}
+
+p {
+    @include foobar($bottomPadding: 50px);
+}
+
+
+// Variable Arguments for Functions & Mixins
+@mixin config-icon-colors($prefix, $colors...) {
+    @each $i in $colors {
+        .#{$prefix}#{nth($i, 1)} {
+            color: nth($i, 2);
+        }
+    }
+}
+@include config-icon-colors('icon-',
+    'save'   green,
+    'cancel' gray,
+    'delete' red
+);
+
+
+// Content Block Arguments for Mixins
+@mixin only-for-mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@include only-for-mobile() /* note: @content begins here */ {
+    p {
+        font-size: 150%;
+    }
+} /* @content ends */
+
+
+// Content Block Overrides
+@mixin message($class, $color: yellow, $margin: 20px, $padding: 10px) {
+    .message-#{$class} {
+        border: 1px dotted $color;
+        color: $color;
+        margin: $margin;
+        padding: $padding;
+    }
+}
+
+
+// Media Query Bubbling
+body {
+    article {
+        p {
+            font-size: 100%;
+            color: black;
+            padding: 10px;
+
+            @media (max-width: 768px) {
+                font-size: 150%; // use larger text for smaller screens
+            }
+        }
+    }
+}
+
+
+// Media Query Nesting
+p {
+    @media (max-width: 768px) {
+        font-size: 150%; // use larger text for smaller screens
+        @media (orientation: landscape) {
+            line-height: 75%; // condense text a bit because of small vertical space
+        }
+    }
+}
+
+
+// Extending Selectors
+.animal {
+    background: gray;
+}
+.cat {
+    @extend .animal;
+    color: white;
+}
+
+
+// Placeholder Selectors
+%animal {
+    background: gray;
+    // and so on...
+}
+.cat {
+    @extend %animal;
+    color: white;
+}
+.dog {
+    @extend %animal;
+    color: black;
+}
+
+
+// Selector Multiple Inheritance
+// in the framework files:
+//%mfw-standing-out {
+//    font-size: 150%;
+//    font-style: italic;
+//    padding: 25px;
+//}
+////%mfw-slightly-shadowed {
+////    @include box-shadow(black 2px 2px 10px); // from Compass
+////}
+////%mfw-rounded {
+////    @include border-radius(25px); // from Compass
+////}
+//
+//// in the application files:
+//#join-button {
+//    @extend %mfw-standing-out;
+//    @extend %mfw-slightly-shadowed;
+//    @extend %mfw-rounded;
+//    background: green;
+//    color: white;
+//}
+
+
