@@ -29,7 +29,7 @@ nav {
 
 
 // Imports & Partials
-@import 'style.css'; // Creates an HTTP request each time
+@import 'style.css'; // CSS imports create an HTTP request each time, Sass compiles so it only makes one!
 @import '_partial.css'; // Will not generate a full css file
 
 
